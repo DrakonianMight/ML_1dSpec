@@ -157,7 +157,7 @@ Here we describe a method for improving predicting using a 1D wave spectrum.
 Machine Learning \sep Wave Prediction \sep Spectra
 \end{keywords}
 
-\maketitle
+%\maketitle
 
 % Main text
 \section{Introduction}\label{Intro}
@@ -168,6 +168,33 @@ Machine learning techniques are being increasingly applied in this space
 
 \section{Method}\label{method}
 
+\subsection{Datasets}
+Training of the machine learning models can require a substantial amount of data, two key datasets were used for training. Offshore wave spectrum from a wave watch 3 model (in this case the CAWCR wave hindcast) and wave observations at the point of interest. The CAWCR wave hindcast spectrum consists of a 2d dimensional wave spectrum with 30 directional bins and X frequency bins at y spacing.
+
+% Figure
+\begin{figure}[<options>]
+	\centering
+		\includegraphics[<options>]{'../notebooks/offshore_modelled.eps'}
+	  \caption{}\label{fig1}
+\end{figure}
+
+Wave observations sourced from the Queensland Government Wave Monitoring program for sites shown in figure 4. The length of the wave monitoring data for each site was varied and training was therefore undertaken on the available data.
+
+\subsubsection{Data preparation}
+Extracting features from training data is key element in training machine learning models. As well as extracting features each dataset needed to be cleaned to ensure consistency, remove errors and fill gaps where possible. 
+
+To simplify the 2 dimensional wave spectrum for each of the offshore points two processing steps were undertaken, first wave parameters were extracted, second the spectrum was integrated into a 1 dimensional spectrum (integrating directions together). Wave parameters calculated including, Tp, pDir, Hs, Tz and zDir. Directional values were split into x and y values.
+
+The wave monitoring data also required a range of pre-processing techniques, as the data is based on observational equipment there were several issues present in the dataset. These included error values, small data gaps, large data gaps and spurious values. Error values were removed, small gaps (< 3 hours) were linearly interpolated and spurious data was removed using a range filter. Directional values were converted into x and y values. 
+
+The datasets were then merged to create a continuous dataset, and for feature extraction. Features were then extracted, particularly focussed on identifying seasonality in the time series data, months, days, year and hours were all added to the training dataset. 
+
+\subsection{Training, Testing, Validation}
+The dataset was split into validation (~1 year of data) with testing and training each being 80\% and 20\% of the remainder. Scaling was undertaken on the entire dataset to ensure that scaled data included all the data within the minimum and maximum of the dataset. 
+Time series cross validation was configured for model training, with a growing training window of 7 days.
+
+\section{Machine Learning Model}
+An Long-Term Short-Term memory model was selected....
 
 \section{Discussion}\label{disc}
 

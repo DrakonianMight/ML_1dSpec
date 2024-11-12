@@ -1,0 +1,38 @@
+\documentclass[review]{elsarticle}
+\usepackage{tikz}
+% Define custom colors to match Word-like colors
+\definecolor{seaBlue}{RGB}{91, 155, 213}    % Similar to Word's blue
+\definecolor{swellCoral}{RGB}{237, 125, 49} % Similar to Word's orange/coral
+\definecolor{outputGray}{RGB}{191, 191, 191} % Similar to Word's light gray
+\begin{document}
+
+\begin{figure}[!htbh]
+\usetikzlibrary{shapes.geometric, arrows}
+\tikzstyle{output} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=outputGray, text width=3cm, inner sep=3pt]
+\tikzstyle{io} = [rectangle, rounded corners, minimum width=4.5cm, minimum height=1cm, text centered, draw=black, fill=seaBlue, text width=4.5cm, inner sep=3pt]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30, text width = 3cm, inner sep=3pt]
+\tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+\begin{tikzpicture}[node distance=1.4cm]
+%% Our nodes
+\node (Hs) [io, xshift=-10cm, yshift=-10] {H\textsubscript{s} \textsubscript{O} \\ (t = t, t -1dt, ... , t -12dt)};
+\node (Tp) [io, below of=Hs] {T\textsubscript{p} \textsubscript{O} \\ (t = t, t -1dt, ... , t -12dt)};
+\node (Tz) [io, below of=Tp] {T\textsubscript{z} \textsubscript{O} \\ (t = t, t -1dt, ... , t -12dt)};
+\node (Dp_cos) [io, below of=Tz] {cos(D\textsubscript{p} \textsubscript{O}) \\ (t = t, t -1dt, ... , t -12dt)};
+\node (Dp_sin) [io, below of=Dp_cos] {sin(D\textsubscript{p} \textsubscript{O}) \\ (t = t, t -1dt, ... , t -12dt)};
+\node (Hs_n) [output, right of=Hs, xshift=5cm, yshift=-2.5cm] {H\textsubscript{s} NS(t)}; 
+
+
+%% our arrows
+\draw [arrow] (Hs) -- (Hs_n);
+\draw [arrow] (Tp) -- (Hs_n);
+\draw [arrow] (Tz) -- (Hs_n);
+\draw [arrow] (Dp_cos) -- (Hs_n);
+\draw [arrow] (Dp_sin) -- (Hs_n);
+\end{tikzpicture}
+\caption{Diagram showing the architecture of the training and validation datasets, features are on the left and the label or predictor (in this case H\textsubscript{s}) is on the right. Where \textsubscript{O} represents Offshore, NS Nearshore, t represents the predicted timestep and dt represents a timestep (in this case 1 hour). Note that the label or predictor for direction will be two parameters cos(D\textsubscript{p}) and sin(D\textsubscript{p}).}
+\label{fig:NNTrainingDiagram}
+\end{figure}
+
+
+\end{document}

@@ -1,0 +1,55 @@
+\documentclass[review]{elsarticle}
+\usepackage{tikz}
+
+% Define custom colors to match Word-like colors
+\definecolor{seaBlue}{RGB}{91, 155, 213}    % Similar to Word's blue
+\definecolor{swellCoral}{RGB}{237, 125, 49} % Similar to Word's orange/coral
+\definecolor{outputGray}{RGB}{191, 191, 191} % Similar to Word's light gray
+\begin{document}
+
+
+
+\begin{figure}[!htbh]
+\usetikzlibrary{shapes.geometric, arrows}
+\tikzstyle{output} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm, text centered, draw=black,fill=outputGray,, text width=3cm, inner sep=3pt]
+\tikzstyle{io_sea} = [rectangle, rounded corners, minimum width=4.5cm, minimum height=1cm, text centered, draw=black, fill=seaBlue, text width=4.5cm, inner sep=3pt]
+\tikzstyle{io_swell} = [rectangle, rounded corners, minimum width=4.5cm, minimum height=1cm, text centered, draw=black, fill=swellCoral, text width=4.5cm, inner sep=3pt]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+\begin{tikzpicture}[node distance=1.8cm]
+%% Nodes
+\node (Hs_sea) [io_sea, xshift=-8cm] {H\textsubscript{s} \textsubscript{O} (Sea) \\ (t = t, t -1dt, ... , t -12dt)};
+\node (Hs_swell) [io_swell, below of=Hs_sea] {H\textsubscript{s} \textsubscript{O} (Swell) \\ (t = t, t -1dt, ... , t -12dt)};
+
+\node (Tp_sea) [io_sea, below of=Hs_swell, yshift=-0.0cm] {T\textsubscript{p} \textsubscript{O} (Sea) \\ (t = t, t -1dt, ... , t -12dt)};
+\node (Tp_swell) [io_swell, below of=Tp_sea] {T\textsubscript{p} \textsubscript{O} (Swell) \\ (t = t, t -1dt, ... , t -12dt)};
+
+\node (Tz_sea) [io_sea, below of=Tp_swell, yshift=-0.0cm] {T\textsubscript{z} \textsubscript{O} (Sea) \\ (t = t, t -1dt, ... , t -12dt)};
+\node (Tz_swell) [io_swell, below of=Tz_sea] {T\textsubscript{z} \textsubscript{O} (Swell) \\ (t = t, t -1dt, ... , t -12dt)};
+
+\node (Dp_cos_sea) [io_sea, below of=Tz_swell, yshift=-0.0cm] {cos(D\textsubscript{p} \textsubscript{O}) (Sea) \\ (t = t, t -1dt, ... , t -12dt)};
+\node (Dp_cos_swell) [io_swell, below of=Dp_cos_sea] {cos(D\textsubscript{p} \textsubscript{O}) (Swell) \\ (t = t, t -1dt, ... , t -12dt)};
+
+\node (Dp_sin_sea) [io_sea, below of=Dp_cos_swell, yshift=-0.0cm] {sin(D\textsubscript{p} \textsubscript{O}) (Sea) \\ (t = t, t -1dt, ... , t -12dt)};
+\node (Dp_sin_swell) [io_swell, below of=Dp_sin_sea] {sin(D\textsubscript{p} \textsubscript{O}) (Swell) \\ (t = t, t -1dt, ... , t -12dt)};
+
+\node (Hs_n) [output, right of=Hs_swell, xshift=5cm, yshift=-6cm] {H\textsubscript{s} NS(t)};
+
+%% Arrows
+\draw [arrow] (Hs_sea.east) -- (Hs_n.west);
+\draw [arrow] (Hs_swell.east) -- (Hs_n.west);
+\draw [arrow] (Tp_sea.east) -- (Hs_n.west);
+\draw [arrow] (Tp_swell.east) -- (Hs_n.west);
+\draw [arrow] (Tz_sea.east) -- (Hs_n.west);
+\draw [arrow] (Tz_swell.east) -- (Hs_n.west);
+\draw [arrow] (Dp_cos_sea.east) -- (Hs_n.west);
+\draw [arrow] (Dp_cos_swell.east) -- (Hs_n.west);
+\draw [arrow] (Dp_sin_sea.east) -- (Hs_n.west);
+\draw [arrow] (Dp_sin_swell.east) -- (Hs_n.west);
+
+\end{tikzpicture}
+\caption{Diagram showing the architecture of the training and validation datasets. Sea and swell partitions are indicated for each of H\textsubscript{s}, T\textsubscript{p}, T\textsubscript{z}, and D\textsubscript{p}. The label or predictor, H\textsubscript{s} NS, is on the right, where \textsubscript{O} represents Offshore, NS Nearshore, t represents the predicted timestep, and dt represents a timestep (1 hour).}
+\label{fig:NNTrainingDiagram}
+\end{figure}
+
+\end{document}

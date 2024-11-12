@@ -1,0 +1,38 @@
+\documentclass[review]{elsarticle}
+\usepackage{tikz}
+\usepackage{xcolor}
+
+% Define custom colors to match Word-like colors
+\definecolor{spectralBlue}{RGB}{91, 155, 213} % Similar to Word's blue
+\definecolor{swellCoral}{RGB}{237, 125, 49}
+\definecolor{outputGray}{RGB}{191, 191, 191} % Similar to Word's light gray
+
+\begin{document}
+
+\begin{figure}[!htbh]
+\usetikzlibrary{shapes.geometric, arrows}
+% Update styles with custom colors and compact layout
+\tikzstyle{output} = [rectangle, rounded corners, minimum width=2.5cm, minimum height=0.8cm, text centered, draw=black, fill=outputGray, text width=2.5cm, inner sep=2pt]
+\tikzstyle{io_spectrum} = [rectangle, rounded corners, minimum width=3.5cm, minimum height=0.8cm, text centered, draw=black, fill=spectralBlue, text width=3.5cm, inner sep=2pt]
+\tikzstyle{io_dp} = [rectangle, rounded corners, minimum width=3.5cm, minimum height=0.8cm, text centered, draw=black, fill=swellCoral, text width=3.5cm, inner sep=2pt]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+\begin{tikzpicture}[node distance=1.5cm and 1.5cm] % Increase horizontal and vertical spacing
+
+%% Single Node for Spectral Bins labeled "PSD in fn O"
+\node (Spec) [io_spectrum, xshift=-6cm] {PSD in fn O \\ \small{(t = t, t -1dt, ... , t -12dt)}};
+
+\node (Dp) [io_dp, below of=Spec, yshift=-1.2cm] {Sin(Dp) O \\ \small{(t = t, t -1dt, ... , t -12dt)}};
+
+\node (Hs_n) [output, right of=Spec, xshift=5cm, yshift=-0.6cm] {H\textsubscript{s} NS(t)};
+
+%% Arrows
+\draw [arrow] (Spec.east) -- (Hs_n.west);
+\draw [arrow] (Dp.east) -- (Hs_n.west);
+
+\end{tikzpicture}
+\caption{Diagram showing the architecture of the training and validation datasets with a single "PSD in fn O" input node and an additional "Dp" input node representing the direction parameter.}
+\label{fig:NNTrainingDiagram}
+\end{figure}
+
+\end{document}
